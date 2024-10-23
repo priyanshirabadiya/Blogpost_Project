@@ -1,0 +1,21 @@
+.main_parent{
+    display: flex;
+    justify-content: center;
+}
+
+.login_page{
+    
+    box-shadow: 5px 5px 15px 0px gray;
+}
+
+.logo_img img{
+    height: 200px;
+    width: auto;
+}
+
+input[type="text"],input[type="password"]{
+    height: 40px;
+    width: 100%;
+    outline: none;
+    border-bottom: 1px solid gray;
+}
