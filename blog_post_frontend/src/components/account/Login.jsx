@@ -9,11 +9,21 @@ const Login = () => {
     const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [emailerror, setEmailError] = useState(false);
+    const [passWorderror, setpassWordError] = useState(false);
+    const [Semailerror, SsetEmailError] = useState(false);
+    const [SpassWorderror, SsetpassWordError] = useState(false);
+    const [userNameerror, setuserNameError] = useState(false);
     const toggleSignup = () => {
         account === 'signUp' ? toggleAccount('login') : toggleAccount('signUp');
     }
 
     const handleLogin = async () => {
+        setEmailError(email === "")
+        setpassWordError(password === "")
+        if (email === "" || password === "") {
+            return;
+        }
         try {
             let response = await fetch('http://localhost:1165/user/loginuser', {
                 method: 'POST',
@@ -26,6 +36,7 @@ const Login = () => {
             let data = await response.json();
             if (response.ok) {
                 console.log("Registed user is:", data);
+                sessionStorage.setItem('access token', `Bearer ${data.accessToken}`);
             }
             else {
                 console.log('Register failed Error is:', data.message);
@@ -36,6 +47,12 @@ const Login = () => {
     }
 
     const handleSignup = async () => {
+        setuserNameError(fullname === "")
+        SsetEmailError(email === "")
+        SsetpassWordError(password === "")
+        if (fullname === "" || email === "" || password === "") {
+            return;
+        }
         try {
             let response = await fetch("http://localhost:1165/user/adduser", {
                 method: 'POST',
@@ -69,17 +86,25 @@ const Login = () => {
                                 <label htmlFor="email">Enter email:</label><br />
                                 <input
                                     type="text"
-                                    className="mt-0 rounded mb-5"
+                                    className='mt-0 rounded mb-5'
                                     placeholder="Email address"
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        setEmailError(false);
+                                    }}
                                 />
+                                {emailerror && <p className='error_message'>Email must be require.</p>}
                                 <label htmlFor="password" className="mt-10" >Enter Password:</label><br />
                                 <input
                                     type="password"
                                     className="mt-0 rounded"
                                     placeholder="Password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => {
+                                        setPassword(e.target.value)
+                                        setpassWordError(false)
+                                    }}
                                 />
+                                {passWorderror && <p className='error_message-pass'>Password must be require.</p>}
                                 <div className="m-5 mt-8 flex justify-center">
                                     <Box sx={{ flexWrap: 'wrap' }}>
                                         <Button className='w-[300px]' onClick={handleLogin} >Login Account</Button>
@@ -93,27 +118,39 @@ const Login = () => {
                         </div>
                         :
                         <form action="">
-                            <label htmlFor="firstName">Enter Name:</label><br />
+                            <label htmlFor="firstName">Enter UserName:</label><br />
                             <input
                                 type="text"
                                 className="mt-0 rounded mb-5"
-                                placeholder="Name"
-                                onChange={(e) => setFullname(e.target.value)}
+                                placeholder="Username"
+                                onChange={(e) => {
+                                    setFullname(e.target.value)
+                                    setuserNameError(false)
+                                }}
                             />
+                            {userNameerror && <p className='text-[#ff0000] text-[12px] -mt-3 mb-4'>Username must be require.</p>}
                             <label htmlFor="firstName">Enter email:</label><br />
                             <input
                                 type="text"
                                 className="mt-0 rounded mb-5"
                                 placeholder="Email address"
-                                onChange={(e)=>setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+                                    SsetEmailError(false)
+                                }}
                             />
+                            {Semailerror && <p className='text-[#ff0000] text-[12px] -mt-3 mb-4'>Email must be require.</p>}
                             <label htmlFor="firstName" className="mt-10" >Enter Password:</label><br />
                             <input
                                 type="password"
                                 className="mt-0 rounded"
                                 placeholder="Password"
-                                onChange={(e)=>setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                    SsetpassWordError(false)
+                                }}
                             />
+                            {SpassWorderror && <p className='error_message-pass'>Password must be require.</p>}
                             <div className="m-5 mt-8 flex justify-center">
                                 <Box sx={{ flexWrap: 'wrap' }}>
                                     <Button className='w-[300px]' onClick={handleSignup} >Create an account</Button>

@@ -40,7 +40,7 @@ exports.loginUser = async (req, res) => {
             return res.send({ message: Messages.INCORRECT_PASS })
         }
         let token = await jwt.sign({ userID: user._id }, process.env.JWT_SECREATE)
-        return res.send({ message: Messages.LOGIN_SUCCESS, token });
+        return res.send({ message: Messages.LOGIN_SUCCESS, accessToken : token , username : user.fullname });
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: Messages.INTERNAL_SERVER_ERROR });

@@ -18,3 +18,21 @@ input[type="text"],input[type="password"]{
     outline: none;
     border-bottom: 1px solid gray;
 }
+
+.error_line{
+    border: 1px solid red;
+}
+
+.error_message{
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.error_message-pass{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
